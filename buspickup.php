@@ -2,6 +2,7 @@
 
 require_once 'buspickup.civix.php';
 use CRM_Buspickup_ExtensionUtil as E;
+use CRM_Buspickup_Utils as BP;
 
 /**
  * Implements hook_civicrm_config().
@@ -157,14 +158,31 @@ function buspickup_civicrm_preProcess($formName, &$form) {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_navigationMenu
  *
+ */
 function buspickup_civicrm_navigationMenu(&$menu) {
-  _buspickup_civix_insert_navigation_menu($menu, 'Mailings', array(
-    'label' => E::ts('New subliminal message'),
-    'name' => 'mailing_subliminal_message',
-    'url' => 'civicrm/mailing/subliminal',
-    'permission' => 'access CiviMail',
-    'operator' => 'OR',
+  _buspickup_civix_insert_navigation_menu($menu, 'Administer/System Settings', array(
+    'label' => E::ts('Bus Pickup Locations'),
+    'name' => 'buspickup_locations',
+    'url' => CRM_Utils_System::url('civicrm/buspickup/locations', 'reset=1'),
+    'permission' => 'administer CiviCRM',
+    //'operator' => 'OR',
     'separator' => 0,
   ));
   _buspickup_civix_navigationMenu($menu);
-} // */
+}
+
+
+function buspickup_civicrm_custom( $op, $groupID, $entityID, &$params ) {
+  if ( $op != 'create' && $op != 'edit' ) {
+    return;
+  }
+  if ($groupID == BP::CUSTOM_GROUP_IND_DETAILS_ID) { // Individual Details
+    BP::updatePickupTime($entityID);
+  }
+}
+
+function buspickup_civicrm_post($op, $objectName, $objectId, &$objectRef) {
+  if (in_array($op, ['create', 'edit']) && ($objectName == 'Individual') && $objectId) {
+    BP::updatePickupTime($objectId);
+  }
+}

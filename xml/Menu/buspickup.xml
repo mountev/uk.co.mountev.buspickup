@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/buspickup/locations</path>
+    <page_callback>CRM_Buspickup_Form_Locations</page_callback>
+    <title>Locations</title>
+    <access_callback>1</access_callback>
+    <is_public>true</is_public>
+    <is_ssl>true</is_ssl>
+  </item>
+</menu>
