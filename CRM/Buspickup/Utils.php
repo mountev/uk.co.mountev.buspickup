@@ -7,7 +7,8 @@
 class CRM_Buspickup_Utils {
 
   const
-    CUSTOM_GROUP_IND_DETAILS_ID = 2;
+    CUSTOM_GROUP_IND_DETAILS_ID = 2,
+    EDIT_BUSPICKUP_LOCATIONS    = 'edit buspickup locations';
     
   public static function store($data, $rowCount) {
     $rowValues = [];

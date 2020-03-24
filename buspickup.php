@@ -164,13 +164,19 @@ function buspickup_civicrm_navigationMenu(&$menu) {
     'label' => E::ts('Bus Pickup Locations'),
     'name' => 'buspickup_locations',
     'url' => CRM_Utils_System::url('civicrm/buspickup/locations', 'reset=1'),
-    'permission' => 'administer CiviCRM',
+    'permission' => BP::EDIT_BUSPICKUP_LOCATIONS,
     //'operator' => 'OR',
     'separator' => 0,
   ));
   _buspickup_civix_navigationMenu($menu);
 }
 
+function buspickup_civicrm_permission(&$permissions) {
+  $permissions[BP::EDIT_BUSPICKUP_LOCATIONS] = [
+    ts('edit buspickup locations'),
+    ts('edit buspickup locations and timings for k2b and c2b walkers'),
+  ];
+}
 
 function buspickup_civicrm_custom( $op, $groupID, $entityID, &$params ) {
   if ( $op != 'create' && $op != 'edit' ) {
@@ -184,5 +190,10 @@ function buspickup_civicrm_custom( $op, $groupID, $entityID, &$params ) {
 function buspickup_civicrm_post($op, $objectName, $objectId, &$objectRef) {
   if (in_array($op, ['create', 'edit']) && ($objectName == 'Individual') && $objectId) {
     BP::updatePickupTime($objectId);
+  } elseif (in_array($op, ['create', 'edit']) && ($objectName == 'Relationship') && $objectId) {
+    $relTypeId = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_RelationshipType', 'Employee of', 'id', 'name_a_b');
+    if (($objectRef->relationship_type_id == $relTypeId) && $objectRef->is_active) {
+      BP::updatePickupTime($objectRef->contact_id_a);
+    }
   }
 }

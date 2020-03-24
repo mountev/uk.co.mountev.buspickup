@@ -15,7 +15,7 @@ class CRM_Buspickup_Form_Locations extends CRM_Core_Form {
    */
   public function preProcess() {
     $this->_action = CRM_Core_Action::VIEW;
-    if (CRM_Core_Permission::check('administer CiviCRM')) {
+    if (CRM_Core_Permission::check(BP::EDIT_BUSPICKUP_LOCATIONS)) {
       $this->_action = CRM_Core_Action::UPDATE;
     }
     CRM_Core_Resources::singleton()->addStyleFile('uk.co.mountev.buspickup',  'css/spin.css', 10, 'html-header');
