@@ -40,3 +40,4 @@ cv en buspickup
 - Enable new permission 'edit buspickup locations' for roles responsible for updating locations.
 - Visit Admin > System Settings > Bus Pickup Locations to update locations and timings.
 - When a Contact, Custom Set (Individual Details) or Relationship (Team member of) is created or updated, it should automatically set "Bus Pickup Time" custom field of "Individual Details" custom set.
+- Configure a scheduled job for pickup time to be updated on regular intervals, based on pickup location. API Entity: Buspickup, API Action: updatepickuptime.
