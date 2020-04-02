@@ -188,9 +188,7 @@ function buspickup_civicrm_custom( $op, $groupID, $entityID, &$params ) {
 }
 
 function buspickup_civicrm_post($op, $objectName, $objectId, &$objectRef) {
-  if (in_array($op, ['create', 'edit']) && ($objectName == 'Individual') && $objectId) {
-    BP::updatePickupTime($objectId);
-  } elseif (in_array($op, ['create', 'edit']) && ($objectName == 'Relationship') && $objectId) {
+  if (in_array($op, ['create', 'edit']) && ($objectName == 'Relationship') && $objectId) {
     $relTypeId = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_RelationshipType', 'Employee of', 'id', 'name_a_b');
     if (($objectRef->relationship_type_id == $relTypeId) && $objectRef->is_active) {
       BP::updatePickupTime($objectRef->contact_id_a);

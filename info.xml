@@ -2,7 +2,7 @@
 <extension key="uk.co.mountev.buspickup" type="module">
   <file>buspickup</file>
   <name>Bus Pickup Locations</name>
-  <description>Global screen for configuring bus locations and timings. Auto update timings based on location when a Contact, Custom set (Individual Details) or Relationship (Team member of) is created or updated.</description>
+  <description>Global screen for configuring bus locations and timings. Auto update timings - 1. regularly via cron 2. when a Custom set (Individual Details) or Relationship (Team member of) gets created or updated in the system.</description>
   <license>AGPL-3.0</license>
   <maintainer>
     <author>Deepak Srivastava</author>
