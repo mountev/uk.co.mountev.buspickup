@@ -122,7 +122,7 @@ class CRM_Buspickup_Utils {
       3 => [$relTypeId, 'Positive'],
     ];
 
-    //CRM_Core_DAO::executeQuery("DROP TABLE IF EXISTS tmp_buspickup_loc_time");
+    CRM_Core_DAO::executeQuery("DROP TEMPORARY TABLE IF EXISTS tmp_buspickup_loc_time");
     //$query = "CREATE TABLE tmp_buspickup_loc_time
     $query = "CREATE TEMPORARY TABLE tmp_buspickup_loc_time
       SELECT cr.contact_id_a, 
@@ -134,7 +134,7 @@ class CRM_Buspickup_Utils {
       JOIN   {$indDetailsTable}  id  ON cr.contact_id_a = id.entity_id
       JOIN   civicrm_contact cb      ON cr.contact_id_b = cb.id AND cb.is_deleted = 0
       JOIN   {$teamDetailsTable} td  ON cr.contact_id_b = td.entity_id
-      JOIN   buspickup_locations bpl ON id.{$busPickupPointCol} = bpl.location
+      JOIN   buspickup_locations bpl ON id.{$busPickupPointCol} = cast(bpl.location as varchar(255))
       WHERE  cr.relationship_type_id = %3 AND cr.is_active = 1 AND td.{$teamTypeCol} IN (%1, %2)";
     if (!empty($entityID)) {
       $qParams[4] = [$entityID, 'Positive'];
